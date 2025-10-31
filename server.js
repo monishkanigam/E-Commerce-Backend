@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import {ConnectDB} from './config/db.js'
 import authRouter from './routes/authRoute.js';
 import productsRoute from './routes/productRoute.js';
+
 import cors from 'cors';
 
 dotenv.config();
@@ -22,7 +23,7 @@ app.use(express.urlencoded({extended:true}));
 const Port=process.env.PORT;
 ConnectDB();
 app.use('/api/auth',authRouter);
-app.use("/api/products",productsRoute);
+app.use("/api/product",productsRoute);
 
 app.get("/",(req,res)=>{
     res.send("welcome homepage");

@@ -45,12 +45,12 @@ export const Register=async(req,res)=>{
 
 
         // user id
-        const userId=userDetails.rows[0];
+        const user=userDetails.rows[0];
         res.status(201).json({
             success:true,
             Message:"user register successfully!",
             users:{
-                id:userId.id,
+                id:user.id,
                 firstName:firstName,
                 lastName:lastName,
                 email:email

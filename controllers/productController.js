@@ -1,11 +1,20 @@
-import { success } from 'zod';
 import { pool } from '../config/db.js';
-
-
+import {productSchema} from '../validation/ProductValidation.js';
 export const createProducts = async (req, res) => {
     try {
-        const { name, description, price, category, stock } = req.body;
-        const result = await pool.query("insert into products(name,description,price,category,stock)values($1,$2,$3,$4,$5)returning *", [name, description, price, category, stock]);
+        const { name, description, price, category, image_url } = req.body;
+      
+        const productZod=await productSchema.parse({
+          name,
+          description,
+          price,
+          category,
+          image_url,
+        });
+        console.log("product zod validation:",productZod);
+      const client=await pool.connect();
+
+        const result = await pool.query("insert into products(name,description,price,category,stock)values($1,$2,$3,$4,$5)returning *", [name, description, price, category, image_url]);
         res.status(201).json(
             result.rows[0]);
     } catch (error) {
